@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flipkart</title>
+    <!-- Auto refresh every 3 seconds -->
+    <meta http-equiv="refresh" content="3">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+        }
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px;
+            gap: 20px;
+        }
+        .product {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            width: 200px;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+        }
+        .product img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .product h3 {
+            margin: 10px 0 5px 0;
+            font-size: 18px;
+        }
+        .product p {
+            margin: 5px 0;
+            font-size: 16px;
+            color: #555;
+        }
+        .product button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .product button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Nandankar Hub</h1>
+        <p>Auto-refreshes every 3 seconds</p>
+    </header>
+
+    <div class="products">
+        <div class="product">
+            <img src="https://via.placeholder.com/200x150.png?text=Product+1" alt="Product 1">
+            <h3>Product 1</h3>
+            <p>$10.00</p>
+            <button>Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="https://via.placeholder.com/200x150.png?text=Product+2" alt="Product 2">
+            <h3>Product 2</h3>
+            <p>$20.00</p>
+            <button>Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="https://via.placeholder.com/200x150.png?text=Product+3" alt="Product 3">
+            <h3>Product 3</h3>
+            <p>$15.00</p>
+            <button>Add to Cart</button>
+        </div>
+    </div>
+</body>
+</html>
+

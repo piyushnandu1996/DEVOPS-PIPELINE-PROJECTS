@@ -1,0 +1,28 @@
+pipeline{
+    agent any
+    stages{
+        stage("puliing git repo"){
+            steps{
+                git branch: 'main', url: 'https://github.com/piyushnandu1996/SIGNAL-SUPPORT.git'
+            }
+        }
+
+        stage("Deploy to nginx server"){
+            steps{
+                    withCredentials([
+                        string(credentialsId: 'root-pass', variable: 'PASS')]) {
+                            sh '''
+                                sshpass -p "$PASS" scp -o StrictHostKeyChecking=no \
+                                flipkart_web_page.html ec2-user@172.31.79.23:/var/www/html/flipkart_web_page.html
+                                '''
+}
+
+            }
+        }
+    }
+}
+
+
+
+
+NOTE==> Create credentials with name root-pass (save password )

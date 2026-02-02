@@ -1,0 +1,89 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Git Pull') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/piyushnandu1996/NODEJS-PIPELINE.git'
+            }
+        }
+
+        stage('Install Node.js & npm') {
+            steps {
+                sh '''
+                if ! command -v node >/dev/null 2>&1; then
+                    sudo apt install -y nodejs npm
+                fi
+                '''
+            }
+        }
+        
+        stage('installing npm dependancies'){
+            steps{
+                dir('DEMO/backend'){
+                    sh '''
+                        if [ -f package.json ]; then
+                            sudo npm install 
+                        fi
+                       '''
+                }
+            }
+        }
+        
+        stage('building javascript app'){
+            steps{
+                dir('DEMO/backend'){
+                    sh ' sudo npm run '
+                    }
+            }
+        }
+        
+       stage('Run Backend with PM2') {
+            steps {
+                dir('DEMO/backend') {
+                    sh '''
+                       sudo pm2 delete server.js || true
+                       sudo pm2 start server.js
+                        '''                    
+                        }
+               }
+        }
+       
+       stage('installing dependencies for frontend'){
+           steps{
+               dir('DEMO/frontend'){
+                   sh '''
+                        if [ -f package.json ]; then
+                           npm install
+                        fi
+                        
+                        npm run build
+                        '''
+               }
+           }
+       }
+       
+        stage('Deploy frontend to Nginx') {
+            steps {
+                dir('DEMO/frontend') {
+                    withCredentials([string(credentialsId: 'nginx-pass', variable: 'PASS')]) {
+                    sh '''
+                        sshpass -p "$PASS" rsync -avz \
+                        -e "ssh -o StrictHostKeyChecking=no" \
+                        dist/ root@172.31.31.144:/var/www/html/
+                       '''
+                        }
+                    }
+                }   
+            }
+
+    }
+}
+
+
+
+note ==>  check ssh connection .. 
+   	  give access of 5000 port 
+          chqange ip in frontend/src/App.jsx
