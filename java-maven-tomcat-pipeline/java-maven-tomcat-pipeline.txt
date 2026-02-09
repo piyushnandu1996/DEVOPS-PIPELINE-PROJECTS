@@ -1,0 +1,46 @@
+pipeline{
+    agent any
+    stages{
+        stage('Git pull'){
+            steps{
+                git branch: 'main', url:'https://github.com/piyushnandu1996/java-tomcat.git'
+            }
+        }
+        
+        stage('Installing maven package'){
+            steps{
+            sh '''
+                if ! command mvn --version; then
+                    sudo apt install maven
+                fi
+            '''
+            }
+        }
+        
+        stage('maven Build'){
+           steps{
+               dir('DemoApp'){
+                 sh '''
+                    if [ -f pom.xml ]; then
+                        mvn clean 
+                        mvn clean package 
+                    fi
+                       '''
+               }
+          }
+        }
+        stage('tomcat transfer'){
+            steps{
+                dir('DemoApp/target'){
+                    withCredentials([string(credentialsId: 'tomcat-pass', variable: 'PASS')]) {
+                    sh '''
+                        sshpass -p "$PASS" rsync -avz \
+                        -e "ssh -o StrictHostKeyChecking=no" \
+                        DemoApp.war root@10.190.0.2:/root/tomcat-server/webapps
+                       '''
+                    } 
+                }
+            }
+        }
+    }
+}
