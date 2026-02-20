@@ -1,0 +1,85 @@
+    3rd TIER PROJECT PART 1 - DB (MARIADB)
+	pre requisite -- create 2 instance 1-db , instance 2-appserver (nodejs) 
+step 1 -- 
+apt install mariadb*  -y
+ 
+systemctl  restart  mariadb
+
+step 2 - create a database 
+
+mysql  -u  root  -p (hit blank enter to login)
+
+CREATE DATABASE sadhixdb;
+
+use sadhixdb;
+
+show tables;
+
+CREATE TABLE USER_INFO (
+    id INT PRIMARY KEY,
+    name VARCHAR(255),
+    username VARCHAR(255),
+    email VARCHAR(255),
+    street VARCHAR(255),
+    suite VARCHAR(255),
+    city VARCHAR(255),
+    zipcode VARCHAR(20),
+    lat VARCHAR(20),
+    lng VARCHAR(20),
+    phone VARCHAR(50),
+    website VARCHAR(255),
+    company_name VARCHAR(255),
+    company_catchPhrase VARCHAR(255),
+    company_bs VARCHAR(255)
+);
+
+INSERT INTO USER_INFO (id, name, username, email, street, suite, city, zipcode, lat, lng, phone, website, company_name, company_catchPhrase, company_bs) VALUES
+(1, 'Jobin A', 'Bret', 'Sincere@april.biz', 'Kulas Light', 'Apt. 556', 'Gwenborough', '92998-3874', '-37.3159', '81.1496', '1-770-736-8031 x56442', 'hildegard.org', 'Romaguera-Crona', 'Multi-layered client-server neural-net', 'harness real-time e-markets'),
+(2, 'Zuber K', 'Antonette', 'Shanna@melissa.tv', 'Victor Plains', 'Suite 879', 'Wisokyburgh', '90566-7771', '-43.9509', '-34.4618', '010-692-6593 x09125', 'anastasia.net', 'Deckow-Crist', 'Proactive didactic contingency', 'synergize scalable supply-chains'),
+(3, 'Nikhil P', 'Samantha', 'Nathan@yesenia.net', 'Douglas Extension', 'Suite 847', 'McKenziehaven', '59590-4157', '-68.6102', '-47.0653', '1-463-123-4447', 'ramiro.info', 'Romaguera-Jacobson', 'Face to face bifurcated interface', 'e-enable strategic applications'),
+(4, 'Diler B', 'Karianne', 'Julianne.OConner@kory.org', 'Hoeger Mall', 'Apt. 692', 'South Elvis', '53919-4257', '29.4572', '-164.2990', '493-170-9623 x156', 'kale.biz', 'Robel-Corkery', 'Multi-tiered zero tolerance productivity', 'transition cutting-edge web services'),
+(5, 'Rohit C', 'Kamren', 'Lucio_Hettinger@annie.ca', 'Skiles Walks', 'Suite 351', 'Roscoeview', '33263', '-31.8129', '62.5342', '(254)954-1289', 'demarco.info', 'Keebler LLC', 'User-centric fault-tolerant solution', 'revolutionize end-to-end systems'),
+(6, 'Ketan V', 'Leopoldo_Corkery', 'Karley_Dach@jasper.info', 'Norberto Crossing', 'Apt. 950', 'South Christy', '23505-1337', '-71.4197', '71.7478', '1-477-935-8478 x6430', 'ola.org', 'Considine-Lockman', 'Synchronised bottom-line interface', 'e-enable innovative applications'),
+(7, 'Omkar R', 'Elwyn.Skiles', 'Telly.Hoeger@billy.biz', 'Rex Trail', 'Suite 280', 'Howemouth', '58804-1099', '24.8918', '21.8984', '210.067.6132', 'elvis.io', 'Johns Group', 'Configurable multimedia task-force', 'generate enterprise e-tailers'),
+(8, 'Bharat M', 'Maxime_Nienow', 'Sherwood@rosamond.me', 'Ellsworth Summit', 'Suite 729', 'Aliyaview', '45169', '-14.3990', '-120.7677', '586.493.6943 x140', 'jacynthe.com', 'Abernathy Group', 'Implemented secondary concept', 'e-enable extensible e-tailers'),
+(9, 'Vidyanand J', 'Delphine', 'Chaim_McDermott@dana.io', 'Dayna Park', 'Suite 449', 'Bartholomebury', '76495-3109', '24.6463', '-168.8889', '(775)976-6794 x41206', 'conrad.com', 'Yost and Sons', 'Switchable contextually-based project', 'aggregate real-time technologies'),
+(10, 'Manish L', 'Moriah.Stanton', 'Rey.Padberg@karina.biz', 'Kattie Turnpike', 'Suite 198', 'Lebsackbury', '31428-2261', '-38.2386', '57.2232', '024-648-3804', 'ambrose.net', 'Hoeger LLC', 'Centralized empowering task-force', 'target end-to-end models');
+
+select * from user_info;
+
+now set the password for db ---
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'Password@1234';
+
+flush privileges;
+quit;
+
+step 3 ----
+
+ss -tulnp -- to check in which port your db is running 
+
+now connecting our db with app server (nodejs)---
+
+go to security group of dbserver--
+
+add inbound rule 
+ open port 3306 
+   select the default sg of appserver
+     save 
+	 
+now go to db server and open mariadb configurations---
+ vi /etc/mysql/mariadb.conf.d/50-server.cnf
+    go to bindaddress line 
+	  make chnages 
+	  chnage private ip to ip from anywhere 
+	     (127.0.1... to 0.0.0.0) change it 
+save and exit 
+
+systemctl restart mariadb
+
+now go to appserver --- 
+
+telnet 172.31.38.28(private ip of db) 3306(port)
+
+--------------------------------------------------------
+NOW REFER DOC 2 FOR CONFIGURING APPSERVER (NODEJS)
+		 
