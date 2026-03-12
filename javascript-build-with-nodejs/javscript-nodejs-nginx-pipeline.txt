@@ -85,5 +85,7 @@ pipeline {
 
 
 note ==>  check ssh connection .. 
-   	  give access of 5000 port 
-          chqange ip in frontend/src/App.jsx
+       	  give access of 5000 port 
+          change ip in frontend/src/App.jsx
+          FRONTEND ==> send all content from dist/* folder to nginx /var/www/html and then access index.html
+
