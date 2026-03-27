@@ -45,7 +45,8 @@ pipeline {
                 }
             }
         }
-        
+
+    #deploying on tomcat
      stage('deploy on tomcat server'){
     steps{
         withCredentials([
