@@ -1,0 +1,69 @@
+pipeline {
+    agent any
+    environment{
+        ARTI_USER = "admin"
+        ARTI_PASS = "Admin123"
+        BUILD_APP = "DemoApp.war"
+        JFROG_URL = "http://13.201.66.10:8082/artifactory/Dolat-Capital-SIGNAL/DemoApp.war"
+        TOMCAT_SERVER_IP = "172.31.45.79"
+        
+    }
+    stages{
+        stage('git pull'){
+            steps{
+                git branch : 'main', url : 'https://github.com/piyushnandu1996/pipeline-practice.git'
+            }
+        }
+        
+        stage('installing maven tool'){
+            steps{
+                sh '''
+                if ! mvn -v ; then
+                    sudo apt-get install maven -y
+                fi
+                '''
+            }
+        }
+        
+        stage('Building java application'){
+            steps{
+                dir('java-maven-tomcat-pipeline/java-project/DemoApp'){
+                    sh '''
+                        if [ -f pom.xml ]; then
+                            mvn clean 
+                            mvn clean package
+                        fi
+                       '''
+                }
+            }
+        }
+        
+        stage('transferring build to artifact repository jfrog'){
+            steps{
+                dir('java-maven-tomcat-pipeline/java-project/DemoApp/target'){
+                  sh 'curl -u ${ARTI_USER}:${ARTI_PASS} -T ${BUILD_APP} ${JFROG_URL}'
+                }
+            }
+        }
+        
+     stage('deploy on tomcat server'){
+    steps{
+        withCredentials([
+            usernamePassword(
+                credentialsId: 'tomcat-server',
+                usernameVariable: 'TOMCAT_USER',
+                passwordVariable: 'TOMCAT_PASS'
+            )
+        ]) {
+            sh """
+                sshpass -p "$TOMCAT_PASS" ssh -o StrictHostKeyChecking=no $TOMCAT_USER@${TOMCAT_SERVER_IP} "
+                cd /root/tomcta-server/webapps &&
+                curl -u ${ARTI_USER}:${ARTI_PASS} -O ${JFROG_URL}
+                "
+            """
+        }
+    }
+}
+        
+    }
+}
