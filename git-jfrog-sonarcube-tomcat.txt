@@ -1,0 +1,62 @@
+pipeline{
+    agent any
+    
+    environment {
+        jfrog_user= "admin"
+        jfrog_pass= credentials('jfrog_pass')
+        jfrog_server_pass= credentials('jfrog_server_pass')
+        build_name= "DemoApp.war"
+        jfrog_url= "http://35.154.157.166:8082/artifactory/dolat_capital/"
+    }
+    
+    stages{
+        stage('git pull'){
+            steps{
+                git branch:"main", url:"https://github.com/piyushnandu1996/DEVOPS-PIPELINE-PROJECTS.git"
+            }
+        }
+        
+        stage('installing maven command'){
+            steps{
+                sh '''
+                    if ! mvn -v; then
+                        apt install maven -y
+                    fi
+                    '''
+            }
+        }
+        stage('building java project'){
+            steps{
+                dir('java-maven-tomcat-pipeline/java-project/DemoApp') {
+                    sh '''
+                        if [ -f pom.xml ]; then
+                            mvn clean package
+                        fi
+                        '''
+                }
+            }
+        }
+        
+        stage('checking code with SonarCube'){
+            steps{
+                dir('java-maven-tomcat-pipeline/java-project/DemoApp') {
+                    withSonarQubeEnv('sonarcube_server') {   // name from Jenkins config
+                        sh '''
+                        mvn clean verify sonar:sonar \
+                        -Dsonar.projectKey=piyush-nandu
+                        '''
+                  }
+              }
+            }
+       }
+       
+       stage('Storing to Artifact Jfrog'){
+           steps{
+               dir('java-maven-tomcat-pipeline/java-project/DemoApp/target') {
+                    sh 'curl -u ${jfrog_user}:${jfrog_pass} -T ${build_name} ${jfrog_url}'
+               }
+           }
+       }
+       
+    }  
+}
