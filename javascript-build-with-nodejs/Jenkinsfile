@@ -24,8 +24,11 @@ pipeline {
                 dir('javascript-build-with-nodejs/project/DEMO/backend'){
                     sh ''' 
                         sudo rm -rf node_modules package-lock.json
-                        sudo npm install
-                         sudo pm2 stop server.js
+                        npm cache clean --force 
+                        npm install --no-audit --no-fund
+                        if command sudo pm2 status | grep server  ; 
+                            then sudo pm2 stop server
+                        fi
                         '''
                 }
             }
