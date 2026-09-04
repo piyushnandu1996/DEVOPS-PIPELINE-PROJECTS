@@ -10,7 +10,7 @@ pipeline {
         stage("Installing packages"){
             steps{
                 sh '''
-                    if ! command -v node 2>/dev/null ;
+                    if ! node -v 2>/dev/null ;
                     then
                         sudo apt install -y nodejs npm
                         sudo npm install pm2 -g
