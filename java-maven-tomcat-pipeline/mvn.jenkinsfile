@@ -19,9 +19,9 @@ pipeline{
 
         stage("Building java project "){
             steps{
-                dir("/java-maven-tomcat-pipeline/java-project/DemoApp"){
+                dir("java-maven-tomcat-pipeline/java-project/DemoApp/"){
                     sh '''
-                        sudo mvn clean 
+                        sudo mvn clean \
                         sudo mvn clean package
                     '''
                 }
