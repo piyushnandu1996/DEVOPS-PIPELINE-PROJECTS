@@ -19,7 +19,7 @@ pipeline{
 
         stage("Building java project "){
             steps{
-                dir("/root/DEVOPS-PIPELINE-PROJECTS/java-maven-tomcat-pipeline/java-project/DemoApp"){
+                dir("/java-maven-tomcat-pipeline/java-project/DemoApp"){
                     sh '''
                         mvn clean 
                         mvn clean package
