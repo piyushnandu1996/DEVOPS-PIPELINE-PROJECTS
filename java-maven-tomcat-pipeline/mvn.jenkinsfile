@@ -22,8 +22,9 @@ pipeline{
                 dir("java-maven-tomcat-pipeline/java-project/DemoApp/"){
                     sh '''
                         if [ -f pom.xml ]; then
-                            sudo mvn clean 
-                            sudo mvn clean package
+                            mvn clean 
+                            mvn clean package
+                            sudo chown -R jenkins:jenkins /var/lib/jenkins/workspace/maven-java-dolat
                         fi
                     '''
                 }
