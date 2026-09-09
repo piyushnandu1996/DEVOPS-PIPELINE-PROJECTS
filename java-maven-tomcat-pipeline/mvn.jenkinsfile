@@ -35,7 +35,7 @@ pipeline{
                 dir("java-maven-tomcat-pipeline/java-project/DemoApp"){
 
                     withSonarQubeEnv("my-sonarqube-server"){
-                        sh 'mvn sonar:sonar'
+                        sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:5.2.0.4988:sonar'
 
                     }
 
