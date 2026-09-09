@@ -32,7 +32,7 @@ pipeline{
 
         stage("SonarQube Analysis"){
             steps{
-                dir("/root/DEVOPS-PIPELINE-PROJECTS/java-maven-tomcat-pipeline/java-project/DemoApp"){
+                dir("java-maven-tomcat-pipeline/java-project/DemoApp"){
 
                     withSonarQubeEnv("my-sonarqube-server"){
                         sh 'mvn sonar:sonar'
