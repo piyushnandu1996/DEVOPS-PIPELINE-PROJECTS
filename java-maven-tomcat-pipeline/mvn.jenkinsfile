@@ -35,7 +35,7 @@ pipeline{
                 dir("/root/DEVOPS-PIPELINE-PROJECTS/java-maven-tomcat-pipeline/java-project/DemoApp"){
 
                     withSonarQubeEnv("my-sonarqube-server"){
-                        sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=maven-project'
+                        sh 'mvn clean verify sonar:sonar'
 
                     }
 
