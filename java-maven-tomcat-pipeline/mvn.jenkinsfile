@@ -1,0 +1,32 @@
+pipeline{
+    agent any
+    stages{
+        stage("Git pull"){
+            steps{
+                git branch: "main", URL: "https://github.com/piyushnandu1996/DEVOPS-PIPELINE-PROJECTS.git"
+            }
+        }
+
+        stage("Installing maven package"){
+            steps{
+            sh '''
+                if ! command mvn -v ; then
+                    sudo apt install -y maven
+                fi
+               '''
+            }
+        }
+
+        stage("Building java project "){
+            steps{
+                dir("/root/DEVOPS-PIPELINE-PROJECTS/java-maven-tomcat-pipeline/java-project/DemoApp"){
+                    sh '''
+                        mvn clean 
+                        mvn clean package
+                    '''
+                }
+            }
+        }
+
+    }
+}
