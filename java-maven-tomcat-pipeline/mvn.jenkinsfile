@@ -3,7 +3,7 @@ pipeline{
     stages{
         stage("Git pull"){
             steps{
-                git branch: "main", URL: "https://github.com/piyushnandu1996/DEVOPS-PIPELINE-PROJECTS.git"
+                git branch: 'main', url: 'https://github.com/piyushnandu1996/DEVOPS-PIPELINE-PROJECTS.git'
             }
         }
 
