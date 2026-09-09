@@ -3,7 +3,7 @@ pipeline{
     stages{
         stage("Git pull"){
             steps{
-                git branch: "main", URL: "https://github.com/piyushnandu1996/DEVOPS-PIPELINE-PROJECTS.git"
+                git branch: 'main', url: 'https://github.com/piyushnandu1996/DEVOPS-PIPELINE-PROJECTS.git'
             }
         }
 
@@ -19,10 +19,12 @@ pipeline{
 
         stage("Building java project "){
             steps{
-                dir("/root/DEVOPS-PIPELINE-PROJECTS/java-maven-tomcat-pipeline/java-project/DemoApp"){
+                dir("java-maven-tomcat-pipeline/java-project/DemoApp/"){
                     sh '''
-                        mvn clean 
-                        mvn clean package
+                        if [ -f pom.xml ]; then
+                            sudo mvn clean 
+                            sudo mvn clean package
+                        fi
                     '''
                 }
             }
