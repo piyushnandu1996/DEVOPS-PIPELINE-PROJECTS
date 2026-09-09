@@ -21,8 +21,10 @@ pipeline{
             steps{
                 dir("java-maven-tomcat-pipeline/java-project/DemoApp/"){
                     sh '''
-                        sudo mvn clean \
-                        sudo mvn clean package
+                        if [ -f pom.xml ]; then
+                            sudo mvn clean 
+                            sudo mvn clean package
+                        fi
                     '''
                 }
             }
