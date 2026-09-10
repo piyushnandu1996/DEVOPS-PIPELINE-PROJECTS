@@ -72,7 +72,8 @@ pipeline{
     
         stage("Docker run"){
             steps{
-                sh "docker run -itd --name web-${BUILD_NUMBER} -p 8000:8080 piyush191996/maven:latest"
+                sh "docker compose down"
+                sh "docker compose up -d"
 
             }
         }
