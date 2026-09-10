@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  mavenproject:
+    container_name: "dolat-webpage"
+    image: piyush191996/maven:latest
+
+    ports:
+      - "8000:8080"
+
+    networks:
+      - dolat-signal
+
+    volumes:
+
+      - dolat-signal:/opt/tomcat
+
+    restart: "unless-stopped"
+
+networks:
+  dolat-signal:
+    external: true
+
+volumes:
+  dolat-signal:
+
