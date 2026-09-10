@@ -55,13 +55,20 @@ pipeline{
     }
 
 
-        stage("Building Docker Image"){
+        stage("Docker Build and Push to registry"){
             steps{
-                dir("java-maven-tomcat-pipeline"){
-                    sh 'sudo docker build -t maven:latest .'
+                script {
+                    docker.withRegistry(docker-hub-credentials) {
+                        def customImage = docker.build("maven:latest")
+                        customImage.push("maven:latest")
+
+
+                    }
                 }
             }
         }
+    
+        
 
 
     }
