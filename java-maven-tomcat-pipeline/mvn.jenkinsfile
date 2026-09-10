@@ -58,9 +58,10 @@ pipeline{
         stage("Docker Build and Push to registry"){
             steps{
                 script {
-                    docker.withRegistry(docker-hub-credentials) {
-                        def customImage = docker.build("maven:latest")
-                        customImage.push("maven:latest")
+                    docker.withRegistry('docker-hub-credentials') {
+                        def customImage = docker.build("piyush191996/maven:${BUILD_NUMBER}")
+                        customImage.push("${BUILD_NUMBER}")
+                        customImage.push("latest")
 
 
                     }
