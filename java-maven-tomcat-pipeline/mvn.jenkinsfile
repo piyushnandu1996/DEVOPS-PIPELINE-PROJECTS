@@ -74,6 +74,7 @@ pipeline{
             steps{
                 dir("java-maven-tomcat-pipeline") {
                 sh "docker compose down"
+                sh "docker compose pull"
                 sh "docker compose up -d"
 
                 }
