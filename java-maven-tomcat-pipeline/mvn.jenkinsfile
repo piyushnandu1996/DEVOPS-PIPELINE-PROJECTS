@@ -61,7 +61,7 @@ pipeline{
                     docker.withRegistry('docker-hub-credentials') {
                         def customImage = docker.build("piyush191996/maven:${BUILD_NUMBER}")
                         customImage.push("${BUILD_NUMBER}")
-                        customImage.push("latest")
+                        customImage.push('latest')
 
 
                     }
