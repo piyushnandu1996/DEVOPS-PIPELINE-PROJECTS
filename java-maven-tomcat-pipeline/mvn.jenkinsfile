@@ -72,9 +72,11 @@ pipeline{
     
         stage("Docker run"){
             steps{
+                dir("java-maven-tomcat-pipeline") {
                 sh "docker compose down"
                 sh "docker compose up -d"
 
+                }
             }
         }
 
