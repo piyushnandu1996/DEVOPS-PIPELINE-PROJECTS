@@ -55,6 +55,13 @@ pipeline{
     }
 
 
+        stage("Building Docker Image"){
+            steps{
+                dir("java-maven-tomcat-pipeline"){
+                    sh 'sudo docker build -t maven:latest .'
+                }
+            }
+        }
 
 
     }
