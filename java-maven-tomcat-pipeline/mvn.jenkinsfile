@@ -54,31 +54,17 @@ pipeline{
         }
     }
 
-
-        stage("Docker Build and Push to registry"){
+        stage("Build DockerFile") {
             steps{
-                dir("java-maven-tomcat-pipeline") {
-                    script {
-                        docker.withRegistry('','docker-hub-credentials') {
-                            def customImage = docker.build("piyush191996/maven:${BUILD_NUMBER}")
-                            customImage.push("${BUILD_NUMBER}")
-                            customImage.push('latest')
-                        }
-
-                    }
+                dir("java-maven-tomcat-pipeline"){
+                    sh "docker build -t maven:v1 ."
                 }
+
             }
         }
-    
-        stage("Docker run"){
-            steps{
-                dir("java-maven-tomcat-pipeline") {
-                sh "docker compose down"
-                sh "docker compose up -d"
 
-                }
-            }
-        }
+
+
 
 
     }
