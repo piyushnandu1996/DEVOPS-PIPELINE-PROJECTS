@@ -82,6 +82,18 @@ pipeline{
     }
 }
 
+        stage("Starting docker container"){
+            steps{
+                dir("java-maven-tomcat-pipeline"){
+                    sh """
+                        docker compose down
+                        docker compose pull
+                        docker compose up -d
+                        """
+                }
+            }
+        }
+
 
     }
 }
