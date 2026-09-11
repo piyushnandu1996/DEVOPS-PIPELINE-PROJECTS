@@ -65,7 +65,9 @@ pipeline{
 
         stage("Trivy scanning"){
             steps{
-                sh "trivy image maven:${BUILD_NUMBER}"
+                sshagent(['trivy-server-details']) {
+                    sh "trivy image maven:${BUILD_NUMBER}"
+                }
             }
         }
 
