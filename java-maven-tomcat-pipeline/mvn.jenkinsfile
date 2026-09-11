@@ -57,21 +57,11 @@ pipeline{
         stage("Build DockerFile") {
             steps{
                 dir("java-maven-tomcat-pipeline"){
-                    sh "docker build -t maven:v1 ."
+                    sh "docker build -t maven:v1"
                 }
 
             }
         }
-<<<<<<< HEAD
-=======
-    
-        stage("Docker run"){
-            steps{
-                dir("java-maven-tomcat-pipeline") {
-                sh "docker compose down"
-                sh "docker compose pull"
-                sh "docker compose up -d"
->>>>>>> 925daf21a1ba71c4c246bc179c3cc373ace121c6
 
 
 
