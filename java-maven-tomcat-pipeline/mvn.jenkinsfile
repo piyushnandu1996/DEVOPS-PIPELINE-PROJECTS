@@ -57,7 +57,7 @@ pipeline{
         stage("Build DockerFile") {
             steps{
                 dir("java-maven-tomcat-pipeline"){
-                    sh "docker build -t piyush191996/maven:${BUILD_NUMBER}"
+                    sh "docker build -t piyush191996/maven:${BUILD_NUMBER} ."
                 }
             }
         }
