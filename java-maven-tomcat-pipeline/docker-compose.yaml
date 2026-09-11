@@ -5,7 +5,7 @@ services:
     image: piyush191996/maven:latest
 
     ports:
-      - "8000:8080"
+      - "80:8080"
 
     networks:
       - dolat-signal
