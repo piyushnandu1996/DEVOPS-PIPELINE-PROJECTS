@@ -72,7 +72,7 @@ pipeline{
                         passwordVariable: 'SSH_PASS'
                     )
                 ]){
-                    sh "which sshpass | apt-get install -y sshpass"
+                    sh "which sshpass | sudo apt-get install -y sshpass"
                     sh " sshpass -p ${SSH_PASS} ssh -o StrictHostKeyChecking=no ${SSH_USER}@13.232.105.103 'trivy image maven:${BUILD_NUMBER}'"
 
                 }
