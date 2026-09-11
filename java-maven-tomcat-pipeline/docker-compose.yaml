@@ -8,7 +8,7 @@ services:
       - "8000:8080"
 
     networks:
-      - dolat-signal1
+      - dolat-signal
 
     restart: "unless-stopped"
 
