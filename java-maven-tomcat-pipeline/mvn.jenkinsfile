@@ -65,18 +65,7 @@ pipeline{
 
         stage("Trivy scanning"){
             steps{
-                withCredentials([
-                    usernamePassword(
-                        credentialsId: 'trivy-server',
-                        usernameVariable: 'SSH_USER',
-                        passwordVariable: 'SSH_PASS'
-                    )
-                ]){
-                    sh "which sshpass | sudo apt-get install -y sshpass"
-                    sh " sshpass -p ${SSH_PASS} ssh -o StrictHostKeyChecking=no ${SSH_USER}@13.232.105.103 'trivy image maven:${BUILD_NUMBER}'"
-
-                }
-                
+                sh " trivy image maven:${BUILD_NUMBER} "
             }
         }
 
