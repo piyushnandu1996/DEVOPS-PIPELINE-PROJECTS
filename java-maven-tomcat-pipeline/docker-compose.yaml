@@ -8,18 +8,10 @@ services:
       - "8000:8080"
 
     networks:
-      - dolat-signal
-
-    volumes:
-
-      - dolat-signal:/opt/tomcat
+      - dolat-signal1
 
     restart: "unless-stopped"
 
 networks:
   dolat-signal:
     external: true
-
-volumes:
-  dolat-signal:
-
