@@ -57,7 +57,9 @@ pipeline{
         stage("Build DockerFile") {
             steps{
                 dir("java-maven-tomcat-pipeline"){
-                    sh " app = docker.build('piyush191996/maven:${BUILD_NUMBER}') "
+                    script{
+                        sh " app = docker.build('piyush191996/maven:${BUILD_NUMBER}') "
+                    }
                 }
 
             }
@@ -71,9 +73,11 @@ pipeline{
 
         stage("Docker push"){
             steps{
-                docker.withRegistry('','docker-hub-credentials'){
-                    app.push("${BUILD_NUMBER}")
-                    app.push('latest')
+                script{
+                    docker.withRegistry('','docker-hub-credentials'){
+                        app.push("${BUILD_NUMBER}")
+                        app.push('latest')
+            }
 
         }    
     }
