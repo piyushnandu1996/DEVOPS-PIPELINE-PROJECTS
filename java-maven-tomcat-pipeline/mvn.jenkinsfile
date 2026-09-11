@@ -58,10 +58,9 @@ pipeline{
             steps{
                 dir("java-maven-tomcat-pipeline"){
                     script{
-                        sh " app = docker.build('piyush191996/maven:${BUILD_NUMBER}') "
+                        app = docker.build('piyush191996/maven:${BUILD_NUMBER}')
                     }
                 }
-
             }
         }
 
