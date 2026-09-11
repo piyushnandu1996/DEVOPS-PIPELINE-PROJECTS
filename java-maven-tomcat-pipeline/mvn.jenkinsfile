@@ -65,7 +65,7 @@ pipeline{
 
         stage("Trivy scanning"){
             steps{
-                sh " trivy image --severity CRITICAL --exit-code 1 maven:${BUILD_NUMBER} "
+                sh " trivy image --severity MEDIUM --exit-code 1 maven:${BUILD_NUMBER} "
             }
         }
 
