@@ -67,8 +67,8 @@ pipeline{
             steps{
                 withCredentials([
                     usernamePassword(
-                        credentialsId: 'trivy-server'
-                        usernameVariable: 'SSH_USER'
+                        credentialsId: 'trivy-server',
+                        usernameVariable: 'SSH_USER',
                         passwordVariable: 'SSH_PASS'
                     )
                 ]){
