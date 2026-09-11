@@ -65,9 +65,18 @@ pipeline{
 
         stage("Trivy scanning"){
             steps{
-                sshagent(['trivy-server-details']) {
-                    sh " ssh -o StrictHostKeyChecking=no root@13.232.105.103 'trivy image maven:${BUILD_NUMBER}'"
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'trivy-server'
+                        usernameVariable: 'SSH_USER'
+                        passwordVariable: 'SSH_PASS'
+                    )
+                ]){
+                    sh "which sshpass | apt-get install -y sshpass"
+                    sh " sshpass -p ${SSH_PASS} ssh -o StrictHostKeyChecking=no ${SSH_USER}@13.232.105.103 'trivy image maven:${BUILD_NUMBER}'"
+
                 }
+                
             }
         }
 
