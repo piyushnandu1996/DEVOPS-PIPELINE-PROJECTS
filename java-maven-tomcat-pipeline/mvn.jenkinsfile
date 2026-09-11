@@ -73,7 +73,8 @@ pipeline{
                 script{
                     docker.withRegistry('','docker-hub-credentials'){
                         sh '''
-                                docker push piyush191996/maven:${BUILD_NUMBER}
+                                docker tag piyush191996/maven:${BUILD_NUMBER} piyush191996/maven:latest
+                                docker push piyush191996/maven:latest
                             '''
             }
 
