@@ -57,7 +57,7 @@ pipeline{
         stage("Build DockerFile") {
             steps{
                 dir("java-maven-tomcat-pipeline"){
-                    sh "docker build -t maven:${BUILD_NUMBER} ."
+                    sh " app = docker.build('piyush191996/maven:${BUILD_NUMBER}') "
                 }
 
             }
@@ -65,7 +65,7 @@ pipeline{
 
         stage("Trivy scanning"){
             steps{
-                sh " trivy image --severity CRITICAL --exit-code 1 maven:${BUILD_NUMBER} "
+                sh " trivy image --severity CRITICAL --exit-code 1 piyush191996/maven:${BUILD_NUMBER} "
             }
         }
 
